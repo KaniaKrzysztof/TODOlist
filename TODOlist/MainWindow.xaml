@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TODOlist"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="TODO List" Height="350" Width="525">
     <Grid>
-        
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="What do you want to do..." VerticalAlignment="Top" Width="410" Margin="10,10,0,0" GotMouseCapture="textBox_GotMouseCapture" GotKeyboardFocus="textBox_GotKeyboardFocus" KeyUp="textBox_Enter"/>
+        <Button x:Name="button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="432,10,0,0" Height="23" Click="button_Click"/>
+        <ListView Margin="10,45,10,19" Name="lvDataBinding" KeyUp="textBox_Del"></ListView>
+
     </Grid>
 </Window>
