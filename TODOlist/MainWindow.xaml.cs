@@ -26,27 +26,27 @@ namespace TODOlist
     public partial class MainWindow : Window
     {
 
-        public ObservableCollection<Task> myTaskList { get; set; }
-
+        //public ObservableCollection<Task> myTaskList { get; private set; }
+        public TaskListManager TaskList { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            myTaskList = new ObservableCollection<Task>();
+            
+            TaskList = new TaskListManager(taskListView);
             this.DataContext = this;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            myTaskList.Add(new Task(textBox.Text));
+            TaskList.AddTask(textBox.Text);
         }
 
         private void textBox_Enter(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-
-                myTaskList.Add(new Task(textBox.Text));
+                TaskList.AddTask(textBox.Text);
             }
 
         }
@@ -65,19 +65,18 @@ namespace TODOlist
             //tb.GotKeyboardFocus -= textBox_GotKeyboardFocus;
         }
 
-        
-
         private void textBox_Del(object sender, KeyEventArgs e)
         {
 
             if (e.Key == Key.Delete)
             {
-                while(taskListView.SelectedItems.Count > 0)
-                {
-                    Task selectedTask = (Task)taskListView.SelectedItems[0];
-                    myTaskList.Remove(selectedTask);
-                }
+                TaskList.RemoveTask();
             }
+        }
+
+        private void removeButton_Click(object sender, RoutedEventArgs e)
+        {
+            TaskList.RemoveTask();
         }
     }
 }

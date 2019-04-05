@@ -6,21 +6,23 @@
         xmlns:local="clr-namespace:TODOlist"
         mc:Ignorable="d"
         Title="TODO List" Height="350" Width="525">
-    <Grid>
+    <Grid Margin="0,0,0,22">
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" 
                  Text="What do you want to do..." VerticalAlignment="Top" Width="410" Margin="10,10,0,0" 
                  GotMouseCapture="textBox_GotMouseCapture" GotKeyboardFocus="textBox_GotKeyboardFocus" 
                  KeyUp="textBox_Enter"/>
         <Button x:Name="button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="432,10,0,0" Height="23" Click="button_Click"/>
-        <ListView Margin="10,45,10,19" Name="taskListView" KeyUp="textBox_Del" ItemsSource="{Binding myTaskList}">
+        <ListView Margin="10,45,197,19" Name="taskListView" KeyUp="textBox_Del" ItemsSource="{Binding TaskList._TaskList}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="160" Header="Content" DisplayMemberBinding="{Binding Content}"/>
                     <GridViewColumn Width="160" Header="DateTimeCreated" DisplayMemberBinding="{Binding DateTimeCreated}"/>
-                    
+
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="removeButton" Content="Remove" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="245,283,0,-9" Height="23" Click="removeButton_Click"/>
+
 
     </Grid>
 </Window>
