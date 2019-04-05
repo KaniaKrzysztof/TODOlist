@@ -12,6 +12,7 @@ namespace TODOlist
     {
         protected ListView _taskListView;
         public ObservableCollection<Task> _TaskList { get; private set; }
+
         public TaskListManager(ListView taskListView)
         {
             _taskListView = taskListView;
@@ -20,9 +21,9 @@ namespace TODOlist
 
         public bool AddTask(string content)
         {
-            if (content != "")
+            if (content.Trim() != "")
             {
-                _TaskList.Add(new Task(content));
+                _TaskList.Add(new Task(content.Trim()));
                 return true;
             } else
             {
@@ -36,7 +37,6 @@ namespace TODOlist
             {
                 Task selectedTask = (Task)_taskListView.SelectedItems[0];
                 _TaskList.Remove(selectedTask);
-                
             }
             return true;
         }
