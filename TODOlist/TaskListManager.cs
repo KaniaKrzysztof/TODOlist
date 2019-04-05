@@ -48,8 +48,10 @@ namespace TODOlist
         public void LoadTasks()
         {
             List<Task> loadedList = _jtfm.ReadJsonFile();
-            TaskList = new ObservableCollection<Task>(loadedList);
-            _taskListView.ItemsSource = TaskList;
+            foreach (Task task in loadedList)
+            {
+                TaskList.Add(task);
+            }
         }
     }
 }
