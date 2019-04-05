@@ -8,12 +8,17 @@
         mc:Ignorable="d"
         Title="TODO List" Height="502" Width="439" SizeToContent="WidthAndHeight">
     <Grid Margin="0,0,12,14">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="185*"/>
+            <ColumnDefinition Width="171*"/>
+        </Grid.ColumnDefinitions>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" 
                  Text="What do you want to do..." VerticalAlignment="Top" Width="310" Margin="10,10,0,0" 
                  GotMouseCapture="textBox_GotMouseCapture" GotKeyboardFocus="textBox_GotKeyboardFocus" 
-                 KeyUp="textBox_Enter"/>
-        <Button x:Name="button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="330,10,0,0" Height="23" Click="button_Click"/>
-        <ListView Margin="10,38,0,0" Name="taskListView" KeyUp="textBox_Del" ItemsSource="{Binding TaskList._TaskList}" HorizontalAlignment="Left" Width="395" Height="374" VerticalAlignment="Top">
+                 KeyUp="textBox_Enter" Grid.ColumnSpan="3"/>
+        <Button x:Name="button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="80,10,0,0" Height="23" Click="button_Click" Grid.Column="2"/>
+        <ListView Margin="10,38,0,0" Name="taskListView" KeyUp="textBox_Del" ItemsSource="{Binding TaskList._TaskList}" HorizontalAlignment="Left" Width="395" Height="374" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -31,9 +36,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="removeButton" Content="Remove" Margin="10,417,0,0" Click="removeButton_Click" HorizontalAlignment="Left" Width="90" Height="32" VerticalAlignment="Top"/>
+        <Button x:Name="removeButton" Content="Remove" Margin="10,417,0,0" Click="removeButton_Click" HorizontalAlignment="Left" Width="85" Height="23" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
 
     </Grid>
-    
+
 </Window>

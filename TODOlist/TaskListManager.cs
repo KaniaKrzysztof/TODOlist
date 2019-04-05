@@ -24,6 +24,8 @@ namespace TODOlist
             if (content.Trim() != "")
             {
                 _TaskList.Add(new Task(content.Trim()));
+                JsonTaskFileManager jtfm = new JsonTaskFileManager();
+                jtfm.MakeJsonFile(_TaskList);
                 return true;
             } else
             {

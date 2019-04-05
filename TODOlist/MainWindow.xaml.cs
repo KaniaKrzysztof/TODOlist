@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,7 @@ namespace TODOlist
             
             TaskList = new TaskListManager(taskListView);
             this.DataContext = this;
+            
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -67,7 +70,6 @@ namespace TODOlist
 
         private void textBox_Del(object sender, KeyEventArgs e)
         {
-
             if (e.Key == Key.Delete)
             {
                 TaskList.RemoveTask();
