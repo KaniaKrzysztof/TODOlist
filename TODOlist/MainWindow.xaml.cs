@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace TODOlist
 {
     /// <summary>
@@ -21,89 +23,72 @@ namespace TODOlist
     /// </summary>
     /// 
 
-    class Task
+    public class Task
     {
-        string content { get; set; }
-        DateTime dateTimeCreated { get; set; }
+       public string Content { get; set; }
+       public string DateTimeCreated { get; set; }
 
         public Task(string content)
         {
-            this.content = content;
-            dateTimeCreated = DateTime.Now;
-        }
-
-        public override string ToString()
-        {
-            return content.ToString();
-        }
-    }
-
-    class TaskList
-    {
-        public List<Task> allTasks { get; private set; }
-
-        public TaskList()
-        {
-            allTasks = new List<Task>();
-        }
-
-        public void AddNewTask(Task newTask)
-        {
-            allTasks.Add(newTask);
+            this.Content = content;
+            DateTimeCreated = DateTime.Now.ToString();
         }
     }
 
 
     public partial class MainWindow : Window
     {
-        TaskList myTaskList = new TaskList();
-        ICollectionView view;
+
+        public ObservableCollection<Task> myTaskList { get; set; }
+
+
         public MainWindow()
         {
             InitializeComponent();
-            lvDataBinding.ItemsSource = myTaskList.allTasks;
-            view = CollectionViewSource.GetDefaultView(myTaskList.allTasks);
+            myTaskList = new ObservableCollection<Task>();
+            this.DataContext = this;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox tb = textBox;
-            myTaskList.AddNewTask(new Task(tb.Text));
-            view.Refresh();
+            myTaskList.Add(new Task(textBox.Text));
+        }
+
+        private void textBox_Enter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+
+                myTaskList.Add(new Task(textBox.Text));
+            }
+
         }
 
         private void textBox_GotMouseCapture(object sender, MouseEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             tb.SelectAll();
-            tb.GotMouseCapture -= textBox_GotMouseCapture;
+            //tb.GotMouseCapture -= textBox_GotMouseCapture;
         }
 
         private void textBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             tb.SelectAll();
-            tb.GotKeyboardFocus -= textBox_GotKeyboardFocus;
+            //tb.GotKeyboardFocus -= textBox_GotKeyboardFocus;
         }
 
-        private void textBox_Enter(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter)
-            {
-                TextBox tb = textBox;
-                myTaskList.AddNewTask(new Task(tb.Text));
-                view.Refresh();
-            }
-            
-        }
+        
 
         private void textBox_Del(object sender, KeyEventArgs e)
         {
+
             if (e.Key == Key.Delete)
             {
-                foreach (Task eachItem in lvDataBinding.SelectedItems)
+                while(taskListView.SelectedItems.Count > 0)
                 {
-                    // do dokonczenia
+                    Task selectedTask = (Task)taskListView.SelectedItems[0];
+                    myTaskList.Remove(selectedTask);
                 }
             }
         }
