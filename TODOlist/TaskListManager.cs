@@ -11,21 +11,23 @@ namespace TODOlist
     public class TaskListManager
     {
         protected ListView _taskListView;
-        public ObservableCollection<Task> _TaskList { get; private set; }
+        protected JsonTaskFileManager _jtfm;
+        public ObservableCollection<Task> TaskList { get; private set; }
 
         public TaskListManager(ListView taskListView)
         {
             _taskListView = taskListView;
-            _TaskList = new ObservableCollection<Task>();
+            TaskList = new ObservableCollection<Task>();
+            _jtfm = new JsonTaskFileManager();
         }
 
         public bool AddTask(string content)
         {
             if (content.Trim() != "")
             {
-                _TaskList.Add(new Task(content.Trim()));
-                JsonTaskFileManager jtfm = new JsonTaskFileManager();
-                jtfm.MakeJsonFile(_TaskList);
+                TaskList.Add(new Task(content.Trim()));
+                
+                _jtfm.MakeJsonFile(TaskList);
                 return true;
             } else
             {
@@ -38,9 +40,16 @@ namespace TODOlist
             while (_taskListView.SelectedItems.Count > 0)
             {
                 Task selectedTask = (Task)_taskListView.SelectedItems[0];
-                _TaskList.Remove(selectedTask);
+                TaskList.Remove(selectedTask);
             }
             return true;
+        }
+
+        public void LoadTasks()
+        {
+            List<Task> loadedList = _jtfm.ReadJsonFile();
+            TaskList = new ObservableCollection<Task>(loadedList);
+            _taskListView.ItemsSource = TaskList;
         }
     }
 }

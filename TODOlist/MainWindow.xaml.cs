@@ -28,47 +28,43 @@ namespace TODOlist
     public partial class MainWindow : Window
     {
 
-        //public ObservableCollection<Task> myTaskList { get; private set; }
         public TaskListManager TaskList { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            
             TaskList = new TaskListManager(taskListView);
             this.DataContext = this;
-            
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             TaskList.AddTask(textBox.Text);
         }
 
-        private void textBox_Enter(object sender, KeyEventArgs e)
+        private void TextBox_Enter(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 TaskList.AddTask(textBox.Text);
             }
-
         }
 
-        private void textBox_GotMouseCapture(object sender, MouseEventArgs e)
+        private void TextBox_GotMouseCapture(object sender, MouseEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             tb.SelectAll();
             //tb.GotMouseCapture -= textBox_GotMouseCapture;
         }
 
-        private void textBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             tb.SelectAll();
             //tb.GotKeyboardFocus -= textBox_GotKeyboardFocus;
         }
 
-        private void textBox_Del(object sender, KeyEventArgs e)
+        private void TextBox_Del(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
             {
@@ -76,9 +72,14 @@ namespace TODOlist
             }
         }
 
-        private void removeButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             TaskList.RemoveTask();
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            TaskList.LoadTasks();
         }
     }
 }

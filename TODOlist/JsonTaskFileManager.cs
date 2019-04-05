@@ -11,15 +11,21 @@ namespace TODOlist
 {
     public class JsonTaskFileManager
     {
+        private string tempJson;
         public JsonTaskFileManager()
         {
-
+            tempJson = "";
         }
         public void MakeJsonFile(ObservableCollection<Task> TaskList)
         {
             string json = JsonConvert.SerializeObject(TaskList.ToList());
             Trace.WriteLine(json);
-            List<Task> reconvertedTaskList = JsonConvert.DeserializeObject<List<Task>>(json);
+            tempJson = json;
+        }
+
+        public List<Task> ReadJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<Task>>(tempJson);
         }
     }
 }
