@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace TODOlist
 {
-    public class Task
+    public class TaskItem
     {
         public string Content { get; set; }
         public string DateTimeCreated { get; set; }
 
-        public Task(string content)
+        public TaskItem(string content)
         {
             this.Content = content;
             DateTimeCreated = DateTime.Now.ToString();

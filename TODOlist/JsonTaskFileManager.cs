@@ -16,16 +16,16 @@ namespace TODOlist
         {
             tempJson = "";
         }
-        public void MakeJsonFile(ObservableCollection<Task> TaskList)
+        public void MakeJsonFile(ObservableCollection<TaskItem> TaskList)
         {
             string json = JsonConvert.SerializeObject(TaskList.ToList());
             Trace.WriteLine(json);
             tempJson = json;
         }
 
-        public List<Task> ReadJsonFile()
+        public List<TaskItem> ReadJsonFile()
         {
-            return JsonConvert.DeserializeObject<List<Task>>(tempJson);
+            return JsonConvert.DeserializeObject<List<TaskItem>>(tempJson);
         }
     }
 }

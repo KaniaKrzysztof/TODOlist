@@ -12,12 +12,12 @@ namespace TODOlist
     {
         protected ListView _taskListView;
         protected JsonTaskFileManager _jtfm;
-        public ObservableCollection<Task> TaskList { get; private set; }
+        public ObservableCollection<TaskItem> TaskList { get; private set; }
 
         public TaskListManager(ListView taskListView)
         {
             _taskListView = taskListView;
-            TaskList = new ObservableCollection<Task>();
+            TaskList = new ObservableCollection<TaskItem>();
             _jtfm = new JsonTaskFileManager();
         }
 
@@ -25,7 +25,7 @@ namespace TODOlist
         {
             if (content.Trim() != "")
             {
-                TaskList.Add(new Task(content.Trim()));
+                TaskList.Add(new TaskItem(content.Trim()));
                 
                 _jtfm.MakeJsonFile(TaskList);
                 return true;
@@ -39,7 +39,7 @@ namespace TODOlist
         {
             while (_taskListView.SelectedItems.Count > 0)
             {
-                Task selectedTask = (Task)_taskListView.SelectedItems[0];
+                TaskItem selectedTask = (TaskItem)_taskListView.SelectedItems[0];
                 TaskList.Remove(selectedTask);
             }
             return true;
@@ -47,8 +47,8 @@ namespace TODOlist
 
         public void LoadTasks()
         {
-            List<Task> loadedList = _jtfm.ReadJsonFile();
-            foreach (Task task in loadedList)
+            List<TaskItem> loadedList = _jtfm.ReadJsonFile();
+            foreach (TaskItem task in loadedList)
             {
                 TaskList.Add(task);
             }
