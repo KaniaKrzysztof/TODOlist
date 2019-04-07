@@ -22,8 +22,8 @@ namespace TaskApi.Controllers
 
             //if (_context.TaskItems.Count() == 0)
             //{
-            //    // Create a new TodoItem if collection is empty,
-            //    // which means you can't delete all TodoItems.
+            //    // Create a new TaskItem if collection is empty,
+            //    // which means you can't delete all TaskItems.
             //    _context.TaskItems.Add(new TaskItem { Content = "Item1" });
             //    _context.SaveChanges();
             //}
@@ -58,6 +58,23 @@ namespace TaskApi.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetTaskItem), new { id = item.Id }, item);
+        }
+
+        // DELETE: api/Task/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTaskItem(long id)
+        {
+            var TaskItem = await _context.TaskItems.FindAsync(id);
+
+            if (TaskItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.TaskItems.Remove(TaskItem);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
