@@ -27,13 +27,13 @@ namespace TODOlist
 
     public partial class MainWindow : Window
     {
-
         public TaskListManager TaskList { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            TaskList = new TaskListManager(taskListView);
+            TaskList = new TaskListManager(taskListView, new QueryHandler(), new CommandHandler());
+            TaskList.LoadTasks();
             this.DataContext = this;
         }
 

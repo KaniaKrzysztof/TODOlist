@@ -12,7 +12,7 @@ namespace TODOlist
     public class TaskApiClient
     {
         protected HttpClient _client;
-        public TaskApiClient(string uriString = "https://localhost:44321")
+        public TaskApiClient(string uriString)
         {
             _client = new HttpClient
             {

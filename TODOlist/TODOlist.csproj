@@ -61,7 +61,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GetApiHandler.cs" />
+    <Compile Include="CommandHandler.cs" />
+    <Compile Include="QueryHandler.cs" />
     <Compile Include="JsonTaskFileManager.cs" />
     <Compile Include="TaskApiClient.cs" />
     <Compile Include="TaskItem.cs" />

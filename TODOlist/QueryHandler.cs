@@ -9,15 +9,15 @@ using System.Net.Http.Headers;
 
 namespace TODOlist
 {
-    public class GetApiHandler : TaskApiClient
+    public class QueryHandler : TaskApiClient
     {   
         protected string _path;
-        public GetApiHandler(string uriString = "https://localhost:44321", string path = "/api/task") : base(uriString)
+        public QueryHandler(string uriString = "https://localhost:44321/", string path = "api/task") : base(uriString)
         {
             _path = path;
         }
 
-        public async Task<List<TaskItem>> GetTaskList()
+        public async Task<List<TaskItem>> GetTaskListAsync()
         {
             List<TaskItem> downloadedList = null;
             HttpResponseMessage response = await _client.GetAsync(_path);

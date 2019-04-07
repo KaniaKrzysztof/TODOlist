@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -12,45 +14,65 @@ namespace TODOlist
     {
         protected ListView _taskListView;
         public ObservableCollection<TaskItem> TaskList { get; private set; }
+        protected QueryHandler _taskLoader;
+        protected CommandHandler _taskCommander;
 
-        public TaskListManager(ListView taskListView)
+        public TaskListManager(ListView taskListView, QueryHandler taskLoader, CommandHandler taskCommander)
         {
             _taskListView = taskListView;
             TaskList = new ObservableCollection<TaskItem>();
+            _taskLoader = taskLoader;
+            _taskCommander = taskCommander;
         }
 
-        public bool AddTask(string content)
+        public async void AddTask(string content)
         {
             if (content.Trim() != "")
             {
-                TaskList.Add(new TaskItem(content.Trim()));
+                TaskItem tempTask = new TaskItem(content.Trim());
+                TaskList.Add(tempTask);
+                await _taskCommander.CreateTasktAsync(tempTask);
                 
-                return true;
             } else
             {
-                return false;
+                return;
             }
         }
 
-        public bool RemoveTask()
+        public async void RemoveTask()
         {
             while (_taskListView.SelectedItems.Count > 0)
             {
-                TaskItem selectedTask = (TaskItem)_taskListView.SelectedItems[0];
-                TaskList.Remove(selectedTask);
+                try
+                {
+                    TaskItem selectedTask = (TaskItem)_taskListView.SelectedItems[0];
+                    HttpStatusCode responseCode = await _taskCommander.DeleteTaskItemAsync(selectedTask.Id);
+                    TaskList.Remove(selectedTask);
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e.Message);
+                }
             }
-            return true;
         }
 
         public async void LoadTasks()
         {
-            GetApiHandler taskLoader = new GetApiHandler();
-
-            List<TaskItem> loadedList = await taskLoader.GetTaskList();
-            foreach (TaskItem task in loadedList)
+            List<TaskItem> loadedList;
+            try
             {
-                TaskList.Add(task);
+                loadedList = await _taskLoader.GetTaskListAsync();
+                TaskList.Clear();
+                foreach (TaskItem task in loadedList)
+                {
+                    TaskList.Add(task);
+                }
             }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e.Message);
+            }
+
         }
     }
 }
