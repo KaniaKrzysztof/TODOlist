@@ -32,7 +32,7 @@
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
                     <GridViewColumn Width="290" Header="Content" DisplayMemberBinding="{Binding Content}" />
-                    <GridViewColumn Width="100" Header="Created" DisplayMemberBinding="{Binding DateTimeCreated}"/>
+                    <GridViewColumn Width="100" Header="Created" DisplayMemberBinding="{Binding DateCreated}"/>
                 </GridView>
             </ListView.View>
         </ListView>

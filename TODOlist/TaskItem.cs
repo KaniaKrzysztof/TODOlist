@@ -8,13 +8,16 @@ namespace TODOlist
 {
     public class TaskItem
     {
+        public long Id { get; set; }
         public string Content { get; set; }
-        public string DateTimeCreated { get; set; }
+        public DateTime DateCreated { get; protected set; }
+        public bool IsComplete { get; set; }
 
         public TaskItem(string content)
         {
             this.Content = content;
-            DateTimeCreated = DateTime.Now.ToString();
+            DateCreated = DateTime.Now;
+            IsComplete = false;
         }
     }
 }
